@@ -17,6 +17,3 @@ gen/
 ### Windows ###
 Thumbs.db
 desktop.ini
-
-### VS Code (por si acaso) ###
-.vscode/
