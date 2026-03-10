@@ -2,6 +2,7 @@ package com.university.models;
 
 public class FullTimeTeacher extends Teacher{
     private int experienceYears;
+    private static final double MULTIPLIER = 1.10;
 
     public FullTimeTeacher(int id, String name, double baseSalary, int experienceYears) {
         super(id, name, baseSalary);
@@ -18,6 +19,6 @@ public class FullTimeTeacher extends Teacher{
 
     @Override
     public double calculateSalary() {
-        return baseSalary * (1.10 * experienceYears);
+        return baseSalary * (MULTIPLIER * experienceYears);
     }
 }
