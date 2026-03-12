@@ -35,6 +35,9 @@ public class Menu {
                 case "b":
                     printAllClassesAndSubmenu();
                     break;
+                case "c":
+                    createNewStudent();
+                    break;
                 case "f":
                     isActive = false;
                     System.out.println("Finishing process");
@@ -45,13 +48,46 @@ public class Menu {
         }
     }
 
-    private void printAllClassesAndSubmenu() {
-        System.out.println("*** List of Classes ***");
-        List<UniversityClass> universityClasses = universityService.getAllClasses();
+    private void createNewStudent() {
+        System.out.println("\n *** Create new student ***");
+        System.out.print("Id: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine();
+        Student student = new Student(id, name, age);
 
+        System.out.println("\n*** Select a class to enroll the student ***");
+        printClassList();
+        System.out.print("Enter the class number: ");
+        int correctIndex = scanner.nextInt() - 1;
+        scanner.nextLine();
+        List<UniversityClass> universityClasses = universityService.getAllClasses();
+        if (correctIndex >= 0 && correctIndex < universityClasses.size()) {
+            UniversityClass selectedClass = universityClasses.get(correctIndex);
+
+            universityService.addStudentToClass(student, selectedClass);
+            System.out.println(student.getName() + " was added to " + selectedClass.getName());
+        } else {
+            System.out.println("Invalid class.");
+        }
+    }
+
+    private void printClassList() {
+        List<UniversityClass> universityClasses = universityService.getAllClasses();
         for (int i = 0; i < universityClasses.size(); i++) {
             System.out.println((i + 1) + ". Class name: " + universityClasses.get(i).getName() + " - Classroom: " + universityClasses.get(i).getClassroom());
         }
+    }
+
+    private void printAllClassesAndSubmenu() {
+        System.out.println("*** List of Classes ***");
+        printClassList();
+        List<UniversityClass> universityClasses = universityService.getAllClasses();
+
         System.out.print("Enter the number of the class to see details: ");
         int inputClass = scanner.nextInt();
         int correctIndex = inputClass - 1;
