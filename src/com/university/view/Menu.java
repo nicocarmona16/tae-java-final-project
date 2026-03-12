@@ -3,6 +3,7 @@ package com.university.view;
 import com.university.models.*;
 import com.university.services.UniversityService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -38,6 +39,9 @@ public class Menu {
                 case "c":
                     createNewStudent();
                     break;
+                case "d":
+                    createNewClass();
+                    break;
                 case "f":
                     isActive = false;
                     System.out.println("Finishing process");
@@ -45,6 +49,71 @@ public class Menu {
                 default:
                     System.out.println("Invalid option");
             }
+        }
+    }
+
+    private void createNewClass() {
+        System.out.println("\n *** Create new class ***");
+        System.out.print("Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Classroom: ");
+        String classroom = scanner.nextLine();
+
+        System.out.println("\n*** Select the teacher ***");
+        printTeacherList();
+        System.out.print("Enter the teacher number: ");
+        int teacherIndex = scanner.nextInt() - 1;
+        scanner.nextLine();
+
+        List<Teacher> teachers = universityService.getAllTeachers();
+        if (teacherIndex < 0 || teacherIndex >= teachers.size()) {
+            System.out.println("Invalid teacher selected");
+            return;
+        }
+        Teacher selectedTeacher = teachers.get(teacherIndex);
+
+        List<Student> classStudents = new ArrayList<>();
+        List<Student> allStudents = universityService.getAllStudents();
+
+        System.out.println("\n*** Select students for this class ***");
+        boolean isAddingStudents = true;
+
+        while (isAddingStudents) {
+            printStudentList();
+            System.out.print("Enter the student number to add or 0 to finish the process: ");
+            int studentIndex = scanner.nextInt() - 1;
+            scanner.nextLine();
+
+            if (studentIndex == -1) {
+                isAddingStudents = false;
+            } else if (studentIndex >= 0 && studentIndex < allStudents.size()) {
+                Student selectedStudent = allStudents.get(studentIndex);
+                classStudents.add(selectedStudent);
+                System.out.println(selectedStudent.getName() + " was added to the class list");
+            } else {
+                System.out.println("Invalid student number");
+            }
+        }
+
+        if (classStudents.isEmpty()) {
+            System.out.println("A class must have at least one student");
+        }
+        UniversityClass newClass = new UniversityClass(name, classroom, selectedTeacher, classStudents);
+        universityService.addClass(newClass);
+        System.out.println("The class " + newClass.getName() + " was created");
+    }
+
+    private void printTeacherList() {
+        List<Teacher> teacherList = universityService.getAllTeachers();
+        for (int i = 0; i < teacherList.size(); i++) {
+            System.out.println((i + 1) + ". Id: " + teacherList.get(i).getId() + " - Name: " + teacherList.get(i).getName());
+        }
+    }
+
+    private void printStudentList() {
+        List<Student> studentList = universityService.getAllStudents();
+        for (int i = 0; i < studentList.size(); i++) {
+            System.out.println((i + 1) + ". Id: " + studentList.get(i).getId() + " - Name: " + studentList.get(i).getName() + " - Age: " + studentList.get(i).getAge());
         }
     }
 
