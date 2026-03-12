@@ -1,10 +1,9 @@
 package com.university.view;
 
-import com.university.models.FullTimeTeacher;
-import com.university.models.PartTimeTeacher;
-import com.university.models.Teacher;
+import com.university.models.*;
 import com.university.services.UniversityService;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -21,6 +20,10 @@ public class Menu {
         while (isActive) {
             System.out.println("\n*** UNIVERSITY TRACKING SYSTEM ***");
             System.out.println("a. Print all the professors with its data");
+            System.out.println("b. Print all the classes and a submenu to select a class in order to print the class data including its teacher and students");
+            System.out.println("c. Create a new student and add it to an existing class");
+            System.out.println("d. Create a new class and add an existing teacher, existing students and its relevant data");
+            System.out.println("e. List all the classes in which a given student is included");
             System.out.println("f. Exit");
             System.out.print("Select an option: ");
             String option = scanner.nextLine();
@@ -28,6 +31,9 @@ public class Menu {
             switch (option) {
                 case "a":
                     printAllTeachers();
+                    break;
+                case "b":
+                    printAllClassesAndSubmenu();
                     break;
                 case "f":
                     isActive = false;
@@ -37,6 +43,33 @@ public class Menu {
                     System.out.println("Invalid option");
             }
         }
+    }
+
+    private void printAllClassesAndSubmenu() {
+        System.out.println("*** List of Classes ***");
+        List<UniversityClass> universityClasses = universityService.getAllClasses();
+
+        for (int i = 0; i < universityClasses.size(); i++) {
+            System.out.println((i + 1) + ". Class name: " + universityClasses.get(i).getName() + " - Classroom: " + universityClasses.get(i).getClassroom());
+        }
+        System.out.print("Enter the number of the class to see details: ");
+        int inputClass = scanner.nextInt();
+        int correctIndex = inputClass - 1;
+
+        if (correctIndex >= 0 && correctIndex < universityClasses.size()) {
+            UniversityClass selectedClass = universityClasses.get(correctIndex);
+            System.out.println("\n*** Class Details *** ");
+            System.out.println("Class name: " + selectedClass.getName());
+            System.out.println("Classroom: " + selectedClass.getClassroom());
+            System.out.println("Teacher: " + selectedClass.getTeacher().getName());
+            System.out.println("Students:");
+            for (Student student : selectedClass.getStudentList()) {
+                System.out.println("- " + student.getName() + " - ID: " + student.getId() + " - Age: " + student.getAge());
+            }
+        } else {
+            System.out.println("Invalid option");
+        }
+        scanner.nextLine();
     }
 
     private void printAllTeachers() {
