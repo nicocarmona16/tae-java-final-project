@@ -1,7 +1,7 @@
 package com.university.models;
 
 public class PartTimeTeacher extends Teacher{
-    private int hoursPerWeek;
+    private final int hoursPerWeek;
 
     public PartTimeTeacher(int id, String name, double baseSalary, int hoursPerWeek) {
         super(id, name, baseSalary);
@@ -10,10 +10,6 @@ public class PartTimeTeacher extends Teacher{
 
     public int getHoursPerWeek() {
         return hoursPerWeek;
-    }
-
-    public void setHoursPerWeek(int hoursPerWeek) {
-        this.hoursPerWeek = hoursPerWeek;
     }
 
     @Override
