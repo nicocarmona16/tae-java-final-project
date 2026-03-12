@@ -6,6 +6,9 @@ This repository contains the final exercise for the TAE Java Basics Module. The 
 
 ---
 
+### UML Diagram
+![UML Diagram](docs/UMLDiagram.png)
+
 ### Program Features
 
 The application includes a menu with the following options:
