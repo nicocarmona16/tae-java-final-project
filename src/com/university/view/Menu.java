@@ -118,6 +118,7 @@ public class Menu {
 
         if (classStudents.isEmpty()) {
             System.out.println("A class must have at least one student");
+            return;
         }
         UniversityClass newClass = new UniversityClass(name, classroom, selectedTeacher, classStudents);
         universityService.addClass(newClass);
