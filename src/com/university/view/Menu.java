@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Menu {
     Scanner scanner = new Scanner(System.in);
-    private UniversityService universityService;
+    private final UniversityService universityService;
 
     public Menu(UniversityService universityService) {
         this.universityService = universityService;
@@ -42,12 +42,33 @@ public class Menu {
                 case "d":
                     createNewClass();
                     break;
+                case "e":
+                    searchStudentClasses();
+                    break;
                 case "f":
                     isActive = false;
                     System.out.println("Finishing process");
                     break;
                 default:
                     System.out.println("Invalid option");
+            }
+        }
+    }
+
+    private void searchStudentClasses() {
+        System.out.println("\n*** Search Student Classes ***");
+        System.out.print("Enter the student ID: ");
+        int studentId = scanner.nextInt();
+        scanner.nextLine();
+
+        List<UniversityClass> studentClasses = universityService.getClassesByStudentId(studentId);
+
+        if (studentClasses.isEmpty()) {
+            System.out.println("No classes found for the student");
+        } else {
+            System.out.println("Student classes: ");
+            for (UniversityClass universityClass : studentClasses) {
+                System.out.println("- " + universityClass.getName() + ", Classroom: " + universityClass.getClassroom());
             }
         }
     }
