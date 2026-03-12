@@ -1,7 +1,7 @@
 package com.university.models;
 
 public class FullTimeTeacher extends Teacher{
-    private int experienceYears;
+    private final int experienceYears;
     private static final double MULTIPLIER = 1.10;
 
     public FullTimeTeacher(int id, String name, double baseSalary, int experienceYears) {
@@ -11,10 +11,6 @@ public class FullTimeTeacher extends Teacher{
 
     public int getExperienceYears() {
         return experienceYears;
-    }
-
-    public void setExperienceYears(int experienceYears) {
-        this.experienceYears = experienceYears;
     }
 
     @Override

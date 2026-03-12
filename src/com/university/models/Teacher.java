@@ -14,10 +14,6 @@ public abstract class Teacher extends Person implements SalaryCalculator {
         return baseSalary;
     }
 
-    public void setBaseSalary(double baseSalary) {
-        this.baseSalary = baseSalary;
-    }
-
     @Override
     public abstract double calculateSalary();
 }

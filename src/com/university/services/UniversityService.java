@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UniversityService {
-    private University university;
+    private final University university;
 
     public UniversityService() {
         this.university = DataInitializer.initializeData();
@@ -45,23 +45,5 @@ public class UniversityService {
             }
         }
         return studentClasses;
-    }
-
-    public Student getStudentById(int id) {
-        for (Student student : university.getStudentList()) {
-            if (student.getId() == id) {
-                return student;
-            }
-        }
-        return null;
-    }
-
-    public Teacher getTeacherById(int id) {
-        for (Teacher teacher : university.getTeacherList()) {
-            if (teacher.getId() == id) {
-                return teacher;
-            }
-        }
-        return null;
     }
 }
